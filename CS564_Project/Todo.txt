@@ -1,0 +1,15 @@
+#DONE
+#Found the icmp tunneling python program
+#Found a python keylogger
+#Found a python program to make public and private keys and encrypt/decrypt
+#Found a possible python to exe program
+#Found a pastebin uploader
+#implement the encrypted text file into the uploader
+#seperate encrypt and decrypt
+
+#TODO
+#Test encrypt/decrypt and keys
+#Test python to exe program
+#create a batch script to run the icmp.exe to run after it closes (always running on target machine)
+#figure out what to do if they manually close the icmp.exe (they found it)
+#Convert them to exe
