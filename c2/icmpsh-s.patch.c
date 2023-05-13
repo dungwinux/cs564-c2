@@ -267,7 +267,6 @@ int qq() {
   blanks = 0;
   err_count = 0;
   do {
-
     __try {
       __asm
       {
@@ -336,22 +335,12 @@ q:
   return 0;
 }
 
-int cc(void *m, size_t n) {
-  size_t i;
-  unsigned char *p = (unsigned char *)m;
-  for (i = 0; i < n; i++) {
-    if (((int)(p[i]) ^ 0x92) == '^')
-      return 1;
-  }
-  return 0;
-}
-
 void Trampoline2() {
   __try {
-    __asm int 3;
+    // ICE
+    __asm __emit 0xf1;
   } __except (EXCEPTION_EXECUTE_HANDLER) {
-    if (!cc(qq, (size_t)cc - (size_t)qq))
-      qq();
+    qq();
   }
 }
 
@@ -368,7 +357,7 @@ int main(int argc, char **argv) {
     __asm int 3;
   } __except (EXCEPTION_EXECUTE_HANDLER) {
   }
-  Trampoline1();
+  { Trampoline1(); }
 
   return 0;
 }
