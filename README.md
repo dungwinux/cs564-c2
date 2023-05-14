@@ -9,8 +9,7 @@
     -   [Installer (python.org)](https://www.python.org/downloads/release/python-2718/)
     -   [Pip installer](https://bootstrap.pypa.io/pip/2.7/get-pip.py)
     -   `impacket`: Run `python2 -m pip install impacket`
--   Python 3.4.4
-    -   [Installer (python.org)](https://www.python.org/downloads/release/python-344/)
+-   Python 3
 -   Visual C++ 2008 compiler.
     -   [Installer (archive.org)](https://web.archive.org/web/20210106040224/https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi)
 
@@ -30,7 +29,7 @@ cl.exe icmpsh-s.c /D"MY_IP=\"169.254.16.130\""
 
 ### Python code
 
-To package python code, run `python_to_exe.py`
+Pack it into EXE
 
 ## Infiltrate
 
