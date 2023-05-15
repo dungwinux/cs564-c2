@@ -70,12 +70,12 @@ See `output/compiled.zip` for all Python compiled C2 payload.
 
 ## List of components when executing in attacker
 
--   `icmpsh-s.patch.exe` (Remote shell connect)
+-   `icmpsh-s.patch.exe` (Remote shell plant)
 -   `explorer_32.exe` (Keylogger)
 -   `OneDrive.bat` (Keylogger bootstrap)
 -   `sluii.exe` (File Uploader)
 -   `icmpsh_m3.py` (Remote shell connect)
--   `eBlue.py` (EternalBlue Exploit)
+-   `eBlue.py` (EternalBlue exploit)
 -   `mysmb.py` (Necessary for EternalBlue)
 
 ## Infiltrate
