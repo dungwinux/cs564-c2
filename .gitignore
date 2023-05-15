@@ -3,3 +3,4 @@ get-pip.py
 icmp/icmpsh-s.patch.exe
 icmp/icmpsh-s.patch.obj
 icmpsh-s.patch.exe
+mysmb.pyc
