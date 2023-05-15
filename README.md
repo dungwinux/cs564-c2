@@ -47,6 +47,9 @@ Additionally, a scheduled task is made to execute C2 in the future.
 Due to the protocol limitation, we need to connect using Linux system and
 run the following command to disable automatic ICMP reply.
 
+```
+sysctl -w net.ipv4.icmp_echo_ignore_all=1 >/dev/null
+```
 
 When the schedule task run, in order to connect,
 execute on our host:
