@@ -75,11 +75,11 @@ def upload():
             sleep(2)
     except:
         pass
-    location = gettempdir() + "/Install.log"
+    location = gettempdir() + "\\Install.log"
     f = open(location, 'a')
     for url in urls_list:
         s = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        f.write(s + "\t" + url[16:] + "\n")
+        f.write(s + "\t" + url[16:] + ".msi\n")
     f.close()
     msg = ''
 
