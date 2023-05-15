@@ -9,13 +9,11 @@ import sys
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        msg += './decrypt.py <amount of decrypt files named "Untitled%d.txt>\n'
+        msg = './decrypt.py file1 file2 ...\n'
         sys.stderr.write(msg)
         sys.exit(1)
-    count = int(sys.argv[1])
-    while True:
+    for name in sys.argv[1:]:
         try:
-            name = "Untitled(%d).txt" % count
             f = open(name, 'rb')
             toBeDecrypted = f.read()
             f.close()
@@ -32,7 +30,6 @@ if __name__ == '__main__':
                 )
             )
             print((decrypted.decode("utf-8")))
-            count-=1
 
         except:
             #out of files to decrypt
