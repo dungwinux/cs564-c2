@@ -4,7 +4,7 @@
 
 ## Requirement
 
--   Linux host (we used the provided VM of Ubuntu)
+-   Linux host (Ubuntu/Kali)
     -   Python 2.7
         -   [Installer (python.org)](https://www.python.org/downloads/release/python-2718/)
         -   [Pip installer](https://bootstrap.pypa.io/pip/2.7/get-pip.py)
