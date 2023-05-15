@@ -286,7 +286,7 @@ def wait_for_request_processed(conn):
 	conn.send_echo('a')
 
 def find_named_pipe(conn):
-	pipes = [ 'browser', 'spoolss', 'netlogon', 'lsarpc', 'samr' ]
+	pipes = [ 'browser', 'spoolss', 'netlogon', 'lsarpc', 'samr', 'InitShutdown', 'lsass', 'ntsvcs', 'scerpc', 'epmapper', 'LSM_API_service', 'atsvc', 'eventlog', 'spoolss', 'wkssvs', 'trkwks']
 
 	tid = conn.tree_connect_andx('\\\\'+conn.get_remote_host()+'\\'+'IPC$')
 	found_pipe = None
