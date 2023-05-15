@@ -4,7 +4,7 @@
 
 ## Requirement
 
--   Linux host (we use Kali)
+-   Linux host (we used the provided VM of Ubuntu)
 -   Python 2.7
     -   [Installer (python.org)](https://www.python.org/downloads/release/python-2718/)
     -   [Pip installer](https://bootstrap.pypa.io/pip/2.7/get-pip.py)
@@ -24,7 +24,7 @@ open Visual C++ 2008 32/64-bit Command Prompt, and type the
 following. Remember to change `MY_IP` to the IP of commander.
 
 ```
-cl.exe icmpsh-s.c /D"MY_IP=\"169.254.16.130\""
+cl.exe icmpsh-s.patch.c /D"MY_IP=\"192.168.191.128\""
 ```
 
 ### Python code
